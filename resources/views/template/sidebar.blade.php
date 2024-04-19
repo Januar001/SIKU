@@ -26,11 +26,18 @@
             <i class="fas fa-fw fa-users"></i>
             <span>User</span></a>
     </li>
+    <hr class="sidebar-divider mb-1">
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item {{ Request::segment(1) === 'report' ? 'active' : null }}">
+        <a class="nav-link" href="/report">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Report</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider  mb-1">
-    <li class="nav-item {{ Request::segment(1) === 'peta' ? 'active' : null }}">
-        <a class="nav-link" href="/peta">
+    <li class="nav-item {{ Request::segment(1) === 'map' ? 'active' : null }}">
+        <a class="nav-link" href="/map">
             <i class="fas fa-fw fa-map-marked-alt"></i>
             <span>Map</span></a>
     </li>

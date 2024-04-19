@@ -1,9 +1,10 @@
 <?php
 
+use App\Livewire\MapPage;
+use App\Livewire\UserPage;
 use App\Livewire\Dashboard;
 use App\Livewire\ReportPage;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\UserPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ use App\Livewire\UserPage;
 Route::get('/', Dashboard::class);
 Route::get('/user', UserPage::class);
 Route::get('/report', ReportPage::class);
+Route::get('/map', MapPage::class);
 // Route::get('/pegawai', PegawaiPage::class);
 // Route::get('/settings/pendidikan', PendidikanPage::class);
 // Route::get('/settings/jabatan', JabatanPage::class);
