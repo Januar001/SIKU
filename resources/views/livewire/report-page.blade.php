@@ -20,8 +20,8 @@
         }
 
         /* .popup img {
-                                        height: auto;
-                                    } */
+                                                                                                                            height: auto;
+                                                                                                                        } */
 
         /* Untuk perangkat seluler */
         @media (max-width: 768px) {
@@ -89,25 +89,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Hendro</td>
-                        <td>Kunjungan</td>
-                        <td>7.9092090,-112.91029019</td>
-                        <td>
-                            <div class="image-container">
-                                <img src="https://t3.ftcdn.net/jpg/03/67/46/48/240_F_367464887_f0w1JrL8PddfuH3P2jSPlIGjKU2BI0rn.jpg"
-                                    alt="Image" height="40" class="popup-image" wire:data='1'>
-                                <div class="popup">
-                                    <span class="close">&times;</span>
-                                    <img src="https://t3.ftcdn.net/jpg/03/67/46/48/240_F_367464887_f0w1JrL8PddfuH3P2jSPlIGjKU2BI0rn.jpg"
-                                        alt="Popup Image">
-                                </div>
-                            </div>
-                        </td>
-                        <td>Menagih Customer</td>
-                        <td>12 Januari 2024 <br><span>20:00 WIB</span></td>
-                    </tr>
                     {{-- <tr>
                         <td>1</td>
                         <td>Hendro</td>
@@ -127,42 +108,51 @@
                         <td>Menagih Customer</td>
                         <td>12 Januari 2024 <br><span>20:00 WIB</span></td>
                     </tr> --}}
-                    <tr>
-                        <td>2</td>
-                        <td>Dewa</td>
-                        <td>Penagihan</td>
-                        <td>
-                            <a href="https://www.google.com/maps/dir/Current+Location/-7.423585,112.721592"
-                                target="_blank">-7.423585, 112.721592</a>
-                            <br>
-                            <button class="bg-primary rounded-circle" data-toggle="tooltip" data-placement="top"
-                                title="Directions">
-                                <a href="https://www.google.com/maps/dir/Current+Location/-7.423585,112.721592"
-                                    target="_blank">
-                                    <i class="text-white fas fa-directions"></i>
-                                </a>
-                            </button>
-                            <button class="bg-danger rounded-circle" data-toggle="tooltip" data-placement="top"
-                                title="Map">
-                                <a href="https://www.google.com/maps?q=-7.423585,112.721592" target="_blank">
-                                    <i class="text-white fas fa-map-marker-alt"></i>
-                                </a>
-                            </button>
-                        </td>
-                        <td>
-                            <div class="image-container">
-                                <img src="https://media.istockphoto.com/id/1489490993/id/foto/pengusaha-muda-yang-percaya-diri-duduk-di-latar-belakang-yang-terisolasi-antusias.jpg?s=612x612&w=0&k=20&c=FRlDIOUmumqtnTUbnoBAqR4mCNgbWDLrkciC_gkgtzY="
-                                    alt="Image" height="40" class="popup-image" wire:data='2'>
-                                <div class="popup">
-                                    <span class="close">&times;</span>
-                                    <img src="https://media.istockphoto.com/id/1489490993/id/foto/pengusaha-muda-yang-percaya-diri-duduk-di-latar-belakang-yang-terisolasi-antusias.jpg?s=612x612&w=0&k=20&c=FRlDIOUmumqtnTUbnoBAqR4mCNgbWDLrkciC_gkgtzY="
-                                        alt="Popup Image">
+                    @php
+                        $numb = 1;
+                    @endphp
+                    @foreach ($data as $item)
+                        <tr>
+                            <td>{{ $numb++ }}</td>
+                            <td>{{ $item->Users->name }}</td>
+                            <td>{{ $item->action }}</td>
+                            <td>
+                                <a href="https://www.google.com/maps/dir/Current+Location/{{ $item->latitude }},{{ $item->longitude }}"
+                                    target="_blank">{{ $item->latitude }},{{ $item->longitude }}</a>
+                                <br>
+                                <button class="bg-primary rounded-circle" data-toggle="tooltip" data-placement="top"
+                                    title="Directions">
+                                    <a href="https://www.google.com/maps/dir/Current+Location/{{ $item->latitude }},{{ $item->longitude }}"
+                                        target="_blank">
+                                        <i class="text-white fas fa-directions"></i>
+                                    </a>
+                                </button>
+                                <button class="bg-danger rounded-circle" data-toggle="tooltip" data-placement="top"
+                                    title="Map">
+                                    <a href="https://www.google.com/maps?q={{ $item->latitude }},{{ $item->longitude }}"
+                                        target="_blank">
+                                        <i class="text-white fas fa-map-marker-alt"></i>
+                                    </a>
+                                </button>
+                            </td>
+                            <td>
+                                <div class="image-container">
+                                    <img src="https://t3.ftcdn.net/jpg/03/67/46/48/240_F_367464887_f0w1JrL8PddfuH3P2jSPlIGjKU2BI0rn.jpg"
+                                        alt="Image" height="40" class="popup-image" wire:data='1'>
+                                    <div class="popup">
+                                        <span class="close">&times;</span>
+                                        <img src="https://t3.ftcdn.net/jpg/03/67/46/48/240_F_367464887_f0w1JrL8PddfuH3P2jSPlIGjKU2BI0rn.jpg"
+                                            alt="Popup Image">
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>Menagih Customer</td>
-                        <td>12 Januari 2024 <br><span>20:00 WIB</span></td>
-                    </tr>
+                            </td>
+                            <td>{{ $item->keterangan }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y') }}
+                                <br><span>{{ \Carbon\Carbon::parse($item->created_at)->translatedFormat('H:i') }}
+                                    WIB</span>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -23,40 +23,56 @@
 <div class="card">
     <div id="map" style="width: auto; height: 70vh"></div>
 </div>
+
+
+
+@php
+    $totalLat = 0;
+    $totalLng = 0;
+    $markerCount = count($data);
+
+    foreach ($data as $item) {
+        $totalLat += $item['latitude'];
+        $totalLng += $item['longitude'];
+    }
+
+    $centerLat = $totalLat / $markerCount;
+    $centerLng = $totalLng / $markerCount;
+@endphp
+
 @push('script')
-    <script>
-        const map = L.map('map').setView([-7.405701, 112.677028], 12);
+<script>
+    const centerLat = {{ $centerLat }};
+    const centerLng = {{ $centerLng }};
 
-        const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; J-Dev'
-        }).addTo(map);
+    const map = L.map('map').setView([centerLat, centerLng], 13);
 
-        const marker1 = L.marker([-7.410444, 112.697852]).addTo(map)
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    const markers = [];
+    @php
+        foreach ($data as $key => $item) {
+    @endphp
+        const marker{{$key}} = L.marker([{{$item->latitude}}, {{$item->longitude}}]).addTo(map)
             .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
-
-        const marker2 = L.marker([-7.405701, 112.677028]).addTo(map)
-            .bindPopup('<b>Hello world!</b><br />I am a popup.');
-
-        const marker3 = L.marker([-7.407665, 112.726467]).addTo(map)
-            .bindPopup('<b>Hello world!</b><br />I am a popup.');
-
-        const polygon = L.polyline([
-            [-7.410444, 112.697852],
-            [-7.405701, 112.677028],
-            [-7.407665, 112.726467]
-        ]).addTo(map).bindPopup('I am a polygon.');
-
-        function onMapClick(e) {
-            popup
-                .setLatLng(e.latlng)
-                .setContent(`You clicked the map at ${e.latlng.toString()}`)
-                .openOn(map);
+        markers.push(marker{{$key}}.getLatLng());
+    @php
         }
+    @endphp
 
-        map.on('click', onMapClick);
-    </script>
-    {{-- <script>
+    const line = L.polyline(markers, {color: 'red'}).addTo(map);
+</script>
+
+
+
+@endpush
+
+
+
+{{-- <script>
         const map = L.map('map').setView([-7.422946, 112.693785], 13);
 
         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -103,4 +119,3 @@
         // Tambahkan event click pada garis
         line.on('click', displayDistanceOnClick);
     </script> --}}
-@endpush
