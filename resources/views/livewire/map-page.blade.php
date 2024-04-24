@@ -57,13 +57,13 @@
         foreach ($data as $key => $item) {
     @endphp
         const marker{{$key}} = L.marker([{{$item->latitude}}, {{$item->longitude}}]).addTo(map)
-            .bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
+            .bindPopup('<b>AO : {{ $item->users->name }}</b>').openPopup();
         markers.push(marker{{$key}}.getLatLng());
     @php
         }
     @endphp
 
-    const line = L.polyline(markers, {color: 'red'}).addTo(map);
+    const line = L.polyline(markers, {color: 'green'}).addTo(map);
 </script>
 
 
